@@ -1,4 +1,4 @@
-name: Build C++ Project
+name: Build C++ Project for RaspberryPi2
 
 on:
   push:
@@ -10,9 +10,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install ARMv7 cross-compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++-arm-linux-gnueabihf
  
-      - name: Compile with Makefile
-        run: make
+      - name: Compile with Makefile for RaspberryPi2 ARM
+        run: make CXX=arm-linux-gnueabihf
+
+      - name: Verify ARM architecture
+        run: file mHello
 
       - name: Test Run Output
         run: ./mHello
@@ -20,6 +28,6 @@ jobs:
       - name: Upload Compiled Binary
         uses:  actions/upload-artifact@v4
         with:
-          name: TestGithubAction-binary
+          name: rpi2-binary
           path: mHello
           retention-days: 1
