@@ -17,13 +17,13 @@ jobs:
           sudo apt-get install -y g++-arm-linux-gnueabihf
  
       - name: Compile with Makefile for RaspberryPi2 ARM
-        run: make CXX=arm-linux-gnueabihf
+        run: make CXX=arm-linux-gnueabihf-g++
 
       - name: Verify ARM architecture
         run: file mHello
 
       - name: Test Run Output
-        run: ./mHello
+        run: file ./mHello
 
       - name: Upload Compiled Binary
         uses:  actions/upload-artifact@v4
